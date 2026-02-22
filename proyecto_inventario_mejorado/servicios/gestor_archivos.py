@@ -1,7 +1,6 @@
 import os
 from typing import List, Optional
-from modelos.producto import Producto
-
+from modelo.producto import Producto
 class GestorArchivos: #Clase responsable de todas las operaciones de lectura/escritura de archivos.
     # Implementa manejo de excepciones para todas las operaciones de archivo.
     
@@ -9,7 +8,6 @@ class GestorArchivos: #Clase responsable de todas las operaciones de lectura/esc
         #Args: nombre_archivo (str): Ruta del archivo de inventario
         self.nombre_archivo = nombre_archivo
         self._asegurar_directorio()
-    
     def _asegurar_directorio(self): #Método privado para asegurar que el directorio del archivo exista.
         try:
             directorio = os.path.dirname(self.nombre_archivo)
@@ -24,9 +22,7 @@ class GestorArchivos: #Clase responsable de todas las operaciones de lectura/esc
     def guardar_productos(self, productos: List[Producto]) -> bool: #Guarda la lista de productos en el archivo.
         #Args:
         # productos (List[Producto]): Lista de productos a guardar
-        # Returns: 
-        # bool: True si se guardó correctamente, False en caso de error
-            
+        # Returns: bool: True si se guardó correctamente, False en caso de error  
         try:
             with open(self.nombre_archivo, 'w', encoding='utf-8') as archivo:
                 for producto in productos:
@@ -41,13 +37,13 @@ class GestorArchivos: #Clase responsable de todas las operaciones de lectura/esc
         except Exception as e:
             print(f"Error inesperado al guardar productos: {e}")
             return False
-    
     def cargar_productos(self) -> List[Producto]: # Carga los productos desde el archivo.
-        """Returns: List[Producto]: Lista de productos cargados
+        """
+        Returns: List[Producto]: Lista de productos cargados 
         Maneja los siguientes errores:
             - FileNotFoundError: El archivo no existe (retorna lista vacía)
             - PermissionError: No hay permisos de lectura
-            - ValueError: Error en el formato de los datos"""
+            - ValueError: Error en el formato de los datos """
         productos = []
         # Verificar si el archivo existe
         if not os.path.exists(self.nombre_archivo):
@@ -56,7 +52,6 @@ class GestorArchivos: #Clase responsable de todas las operaciones de lectura/esc
         try:
             with open(self.nombre_archivo, 'r', encoding='utf-8') as archivo:
                 lineas = archivo.readlines()
-                
                 for num_linea, linea in enumerate(lineas, 1):
                     linea = linea.strip()
                     if not linea:  # Saltar líneas vacías
@@ -67,7 +62,6 @@ class GestorArchivos: #Clase responsable de todas las operaciones de lectura/esc
                     except ValueError as e:
                         print(f"Advertencia: Línea {num_linea} ignorada - {e}")
                         continue
-            
             print(f"Se cargaron {len(productos)} productos desde '{self.nombre_archivo}'")
             return productos
             
@@ -89,12 +83,10 @@ class GestorArchivos: #Clase responsable de todas las operaciones de lectura/esc
             import time
             timestamp = time.strftime("%Y%m%d_%H%M%S")
             nombre_backup = f"{self.nombre_archivo}.{timestamp}.bak"
-            
             # Copiar archivo
             with open(self.nombre_archivo, 'r', encoding='utf-8') as origen:
                 with open(nombre_backup, 'w', encoding='utf-8') as destino:
                     destino.write(origen.read())
-            
             print(f"Backup creado: {nombre_backup}")
             return True
         except Exception as e:

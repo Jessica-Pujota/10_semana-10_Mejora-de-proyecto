@@ -1,0 +1,33 @@
+## Resumen de las Mejoras Implementadas
+### 1. 
+**Almacenamiento en Archivo** 
+- Cada operación (añadir, eliminar, actualizar) guarda en `inventario.txt`
+- Formato simple: `id,nombre,cantidad,precio`
+- Métodos `a_string_archivo()` y `desde_string_archivo()`
+
+### 2. 
+**Carga Automática**
+- Al crear el inventario, carga desde el archivo
+- Si no existe, lo crea vacío
+- Ignora líneas corruptas y continúa
+
+### 3. 
+**Manejo de Excepciones**
+- `FileNotFoundError`: Archivo no existe → lo crea
+- `PermissionError`: Sin permisos → mensaje y continúa en memoria
+- `ValueError`: Datos corruptos → ignora y sigue
+- `KeyboardInterrupt`: Interrupción usuario → manejo elegante
+
+### 4. 
+**Revertir Cambios**
+- Si falla el guardado en archivo, revierte los cambios en memoria
+- Mantiene consistencia entre memoria y archivo
+
+### 5. 
+**Interfaz Simple**
+- Menú claro con opciones numeradas
+- Validación de entradas de usuario
+- Mensajes claros de éxito/error
+
+Esta versión es más simple pero cumple exactamente con los requisitos solicitados: 
+persistencia en archivo, carga automática y manejo de excepciones, de acuerdo a las especificaciones de la tarea de la semana 10
